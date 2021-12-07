@@ -2,6 +2,8 @@
 
 Load remover for the fallout games
 
+if any issues occur join the speedrunning discord or message me at Radioactiv#8659
+
 
 
 Thanks to Dr T Chops for the initial load removers
