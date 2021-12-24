@@ -13,16 +13,21 @@ state("BOS")
     // lmao good joke
 }
 
-state("Fallout3")
+state("Fallout3","GOG")
 {
-    // Fallout 3
-    bool isLoading : 0xC76CE8;
+	bool loading : 0xC76CE8;
+	bool introDone : 0xC771D0;
+}
+state("Fallout3","Steam")
+{
+    bool introDone : 0xE3AFCC;
+    bool loading : 0xE3ABBC;	
 }
 
 state("FalloutNV")
 {
-    // Fallout: New Vegas
-    bool isLoading : 0xDDA4EC;
+    bool loading : 0xDDA4EC;
+    bool introDone : 0xDDA590;
 }
 
 state("Fallout4")
@@ -132,6 +137,18 @@ init
 
         timer.IsGameTimePaused = false;
     }
+    if(game.ProcessName == "Fallout3")
+    {
+        switch (modules.First().ModuleMemorySize)
+        { // This is to know what version you are playing on
+            case  17952768: version = "Steam";
+                break;
+            case    16166912: version = "GOG"; 
+                break;
+            default:        version = ""; 
+                break;
+        }
+    }
 }
 
 exit
@@ -141,8 +158,25 @@ exit
 
 update
 {
-    if (game.ProcessName == "Fallout4") {
+    if (game.ProcessName == "Fallout4")
+	{
         vars.watchers.UpdateAll(game);
+    }
+    if(game.ProcessName == "Fallout3")
+    {
+        vars.isLoading = false;
+        if ((current.loading) || (!current.introDone))
+        {
+            vars.isLoading = true;
+        }
+    }
+    if(game.ProcessName == "FalloutNV")
+    {
+        vars.isLoading = false;
+        if ((current.loading) || (!current.introDone))
+		{
+            vars.isLoading = true;
+		}
     }
 }
 
@@ -151,7 +185,7 @@ isLoading
     if (timer.CurrentSplit.Name.ToLower().Contains("setup")) {
         return true;
     } else if (game.ProcessName == "Fallout3" || game.ProcessName == "FalloutNV") {
-        return current.isLoading;
+        return vars.isLoading;
     } else if (game.ProcessName == "Fallout4") {
         return (
             vars.isLoadingScreen.Current ||
