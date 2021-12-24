@@ -65,8 +65,8 @@ update
 			}
 			vars.SetTextComponent("Speed:", (current.speedometer)); 
         }		
-    print("totalloading "+vars.isLoading.ToString());
-    print("load "+current.loading.ToString());
+    //print("totalloading "+vars.isLoading.ToString());
+    //print("load "+current.loading.ToString());
 }
 
 isLoading
@@ -76,8 +76,4 @@ isLoading
 exit
 {
     timer.IsGameTimePaused = true;
-}
-shutdown
-{
-    timer.OnReset -= vars.TimerReset;
 }
