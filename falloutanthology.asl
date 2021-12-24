@@ -1,9 +1,9 @@
-state("falloutw")
+state("falloutwHR")
 {
     // Fallout 1 (no vars)
 }
 
-state("FALLOUT2")
+state("fallout2HR")
 {
     // Fallout 2 (no vars)
 }
@@ -157,7 +157,13 @@ exit
 }
 
 update
-{
+{	
+	if(game.ProcessName == "falloutwHR")
+	{
+		print("asda");
+	}
+
+
     if (game.ProcessName == "Fallout4")
 	{
         vars.watchers.UpdateAll(game);
