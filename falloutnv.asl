@@ -35,26 +35,26 @@ startup
 
 update
 {
-    vars.isLoading = false;
+    	vars.isLoading = false;
 	if ((current.loading) || (!current.introDone)) {
         vars.isLoading = true;
     }
         if (settings["Speed"]) 
         {
-			if(vars.isLoading == false)
-			{
-				current.speedometer = current.speed.ToString("000.0000");
-			}
-			vars.SetTextComponent("Speed:", (current.speedometer)); 
+		if(vars.isLoading == false)
+		{
+			current.speedometer = current.speed.ToString("000.0000");
+		}
+		vars.SetTextComponent("Speed:", (current.speedometer)); 
         }
        
 }
 
 isLoading
 {
-    return vars.isLoading;
+	return vars.isLoading;
 }
 exit
 {
-    timer.IsGameTimePaused = true;
+    	timer.IsGameTimePaused = true;
 }
