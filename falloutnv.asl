@@ -1,7 +1,7 @@
 state("FalloutNV")
 {
-    bool loading : 0xDDA4EC;
-    bool introDone : 0xDDA590;
+    	bool loading : 0xDDA4EC;
+    	bool introDone : 0xDDA590;
 	float speed : 0x00DCB4A8, 0x30, 0xA4, 0x8, 0x68, 0x46C, 0x140, 0x514;
 }
 
