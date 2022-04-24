@@ -1,9 +1,9 @@
-state("Fallout3","GOG")
+ state("Fallout3","GOG")
 {
 	bool loading : 0xC76CE8;
 	bool introDone : 0xC771D0;
 	float speed : 0x0000CACC, 0x0 ,0x28, 0x1A4, 0xE8, 0x60, 0x138, 0x344;
-        int quest: 0xC6F2F8 , 0x4;
+    int quest: 0xC6F2F8 , 0x4;
 }
 state("Fallout3","Steam")
 {
@@ -11,16 +11,25 @@ state("Fallout3","Steam")
 	bool loading : 0xE3ABBC;
 	float speed: 0x00D13F68, 0x1E0, 0x1BC, 0xB4, 0x8, 0x60, 0x138, 0x344;
 	int quest: 0x00E23230, 0x4;
-}	
+}
+state("Fallout3","SteamAnniversaryEdition")
+{
+	bool introDone : 0xE3AFCC;
+	bool loading : 0xE3ABBC;
+	float speed: 0x00B4BFB0, 0xB4, 0x8, 0x1A4, 0xE8, 0x60, 0x138, 0x344;
+	int quest: 0x00E23230, 0x4;
+}		
 	
 init
 {
     switch (modules.First().ModuleMemorySize) { // This is to know what version you are playing on
-        case  17952768: version = "Steam";
+        case 17952768: version = "Steam";
             break;
-        case    16166912: version = "GOG"; 
+        case 16166912: version = "GOG"; 
             break;
-        default:        version = ""; 
+		case 16171008: version = "SteamAnniversaryEdition";
+			break;
+        default:        version = "Steam"; 
             break;
     }
 }
@@ -82,19 +91,21 @@ update
 	if ((current.loading) || (!current.introDone)) {
         vars.isLoading = true;
     }
-        if (settings["Speed"]) 
-        {
-			if(vars.isLoading == false)
-			{
-				current.speedometer = current.speed.ToString("000.0000");
-			}
-			vars.SetTextComponent("Speed:", (current.speedometer)); 
-        }
-        if (settings["Quest Counter"]) 
-        {
-            current.questcounter = current.quest.ToString("0");
-			vars.SetTextComponent("Quests:", (current.questcounter)); 
-        }
+	
+	if (settings["Speed"]) 
+	{
+		if(vars.isLoading == false)
+		{
+			current.speedometer = current.speed.ToString("000.0000");
+			vars.SetTextComponent("Speed:", (current.speedometer));
+		}
+
+	}
+	if (settings["Quest Counter"]) 
+	{
+		current.questcounter = current.quest.ToString("0");
+		vars.SetTextComponent("Quests:", (current.questcounter)); 
+	}
 }
 
 isLoading
