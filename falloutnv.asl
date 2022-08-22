@@ -1,7 +1,7 @@
 state("FalloutNV")
 {
-    	bool loading : 0xDDA4EC;
-    	bool introDone : 0xDDA590;
+    bool loading : 0xDDA4EC;
+    bool introDone : 0xDDA590;
 	float speed : 0x00DCB4A8, 0x30, 0xA4, 0x8, 0x68, 0x46C, 0x140, 0x514;
 	byte quest: 0x00DC6D50, 0x4;
 }
@@ -12,6 +12,8 @@ startup
   {
 	String speedometer;
 	String questcounter;
+
+    //creates text components for quest counter and speedometer
 	vars.SetTextComponent = (Action<string, string>)((id, text) =>
     {
         var textSettings = timer.Layout.Components.Where(x => x.GetType().Name == "TextComponent").Select(x => x.GetType().GetProperty("Settings").GetValue(x, null));
@@ -51,9 +53,11 @@ startup
 
 
 
-    // Declares the name of the text component
     settings.Add("Quest Counter", false, "Quest Counter");	
-    settings.Add("Speed", false, "Speed");	
+    settings.Add("Speed", false, "Speed");
+    settings.Add("Autosplitter", false, "Autosplitter");	
+    settings.SetToolTip("Autosplitter", "Causes timer to split when the quest counter is the same as the quest number in your splits surrounded by () eg: (1) Infinite Dash\n Will not split if anything else surrounds the number ");
+
 }
 
 
@@ -78,6 +82,16 @@ update
 		current.questcounter = current.quest.ToString("0");
 		vars.SetTextComponent("Quests:", (current.questcounter)); 
 	}
+}
+
+split
+{
+    //splits when current split contains (x) where x is the current number of completed quests
+    if(timer.CurrentSplit.Name.ToLower().Contains("("+current.questcounter+")") && (settings["Autosplitter"]))
+    {
+        return true;
+    }
+
 }
 
 isLoading
