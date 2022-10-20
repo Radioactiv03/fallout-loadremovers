@@ -12,8 +12,8 @@ https://www.speedrun.com/fallout_series
 
 New Vegas Speedun Mod
 Libraries:
-Newtonsoft.Json
-SevenZipExtractor
-SIPSorcery.WebSocketSharp
+Newtonsoft.Json - https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md
+SevenZipExtractor - https://github.com/adoconnection/SevenZipExtractor/blob/master/LICENSE
+SIPSorcery.WebSocketSharp - https://github.com/sipsorcery/websocket-sharp/blob/master/LICENSE.txt
 
 All Bundled under a MIT License
