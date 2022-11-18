@@ -1,7 +1,8 @@
 state("FalloutNV")
 {
-    bool loading : 0xDDA4EC;
-    bool introDone : 0xDDA590;
+	bool loading : 0xDDA4EC;
+	//pre xnvse patch - bool introDone : 0xDDA590;
+	bool introDone : 0xDDAC70;
 	float speed : 0x00DCB4A8, 0x30, 0xA4, 0x8, 0x68, 0x46C, 0x140, 0x514;
 	byte quest: 0x00DC6D50, 0x4;
 }
@@ -15,7 +16,7 @@ startup
 
     //creates text components for quest counter and speedometer
 	vars.SetTextComponent = (Action<string, string>)((id, text) =>
-    {
+	{
         var textSettings = timer.Layout.Components.Where(x => x.GetType().Name == "TextComponent").Select(x => x.GetType().GetProperty("Settings").GetValue(x, null));
         var textSetting = textSettings.FirstOrDefault(x => (x.GetType().GetProperty("Text1").GetValue(x, null) as string) == id);
         if (textSetting == null)
@@ -34,7 +35,7 @@ startup
 
 
 	vars.SetTextComponent2 = (Action<string, string>)((id, text) =>
-    {
+	{
         var textSettings = timer.Layout.Components.Where(x => x.GetType().Name == "TextComponent").Select(x => x.GetType().GetProperty("Settings").GetValue(x, null));
         var textSetting = textSettings.FirstOrDefault(x => (x.GetType().GetProperty("Text1").GetValue(x, null) as string) == id);
         if (textSetting == null)
@@ -49,7 +50,7 @@ startup
 
         if (textSetting != null)
         textSetting.GetType().GetProperty("Text2").SetValue(textSetting, text);
-    });
+	});
 
 
 
