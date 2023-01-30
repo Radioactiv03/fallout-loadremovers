@@ -73,6 +73,10 @@ update
 	{
 		if(vars.isLoading == false)
 		{
+			if(current.speed > 10000)
+			{
+				current.speed = 0;
+			}
 			current.speedometer = current.speed.ToString("000.0000");
 			vars.SetTextComponent("Speed:", (current.speedometer));
 		}
@@ -80,6 +84,7 @@ update
 	}
 	if (settings["Quest Counter"]) 
 	{
+		
 		current.questcounter = current.quest.ToString("0");
 		vars.SetTextComponent("Quests:", (current.questcounter)); 
 	}
