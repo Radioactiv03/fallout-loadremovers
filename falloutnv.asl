@@ -76,8 +76,8 @@ startup
 	
 	
 	vars.glitchless_Quests = new List<String>{"","","","","","","","","","","","","","","",""};
-	vars.glitchless_Cell = new List<String>{"DAEBB","DDF33","13B3CE","10D512","10BEEE","DABEA","E18B2","DAEB9","10BEED","16DBE3","10BEED","DDE34","161E98"};
-	//split: doc, black mtn, enter strip, enter lucky38, leave strip, leave freeside, bos ft, goodsprings ft, ft back to strip,ft back to strip, ft strip again(after el dorado),dam,end
+	vars.glitchless_Cell = new List<String>{"DAEBB","DDF33","13B3CE","10BEEE","DABEA","E18B2","DAEB9","10BEED","16DBE3","10BEED","DDE34","161E98"};
+	//split: doc, black mtn, enter strip, leave strip, leave freeside, bos ft, goodsprings ft, ft back to strip,ft back to strip, ft strip again(after el dorado),dam,end
 
 	//Normalise Lists so they are same length - Avoid out of range error
 	if(vars.glitchless_Quests.Count == vars.glitchless_Cell.Count){}
