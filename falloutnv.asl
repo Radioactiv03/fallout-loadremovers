@@ -44,7 +44,7 @@ startup
     settings.Add("Speed", false, "Speed");
 	settings.Add("AutoStart",true,"AutoStart");
     settings.Add("Autosplitter", false, "Autosplitter");
-	settings.Add("Quest&Cell_Splitter",true,"Real Autosplitter","Autosplitter");
+	settings.Add("Quest&Cell_Splitter",true,"Category Autosplitters","Autosplitter");
 	settings.Add("Quest_Splitter",false,"Quest Counter Autoplitter","Autosplitter");
 	settings.Add("Debug",false,"Debug");
 	
