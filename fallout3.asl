@@ -1,4 +1,20 @@
- state("Fallout3","GOG")
+state("Fallout3","Steam")
+{
+	bool introDone : 0xE3AFCC;
+	bool loading : 0xE3ABBC;
+	float speed: 0x00D13F68, 0x1E0, 0x1BC, 0xB4, 0x8, 0x60, 0x138, 0x344;
+	int quest: 0x00E23230, 0x4;
+	
+	
+	
+	string16 QuestName: 0xC7A104, 0x614, 0x64,0x0;
+	int QuestStage: 0xC7A104, 0x614, 0x60;
+	int CellRefID : 0xC7A104, 0x3C, 0xC;
+	int playerControlFlag: 0xC7A104, 0x5DC;
+
+	
+}
+state("Fallout3","GOG")
 {
 	bool loading : 0xC76CE8;
 	bool introDone : 0xC771D0;
@@ -10,50 +26,21 @@
 	int CellRefID : 0xC7A104, 0x3C, 0xC;
 	int playerControlFlag: 0xC7A104, 0x5DC;
 }
-
-state("Fallout3","Steam 1.7.0.3")
+state("Fallout3","DownPatch)
 {
-	bool introDone : 0xE3AFCC;
-	bool loading : 0xE3ABBC;
-	float speed: 0x00D13F68, 0x1E0, 0x1BC, 0xB4, 0x8, 0x60, 0x138, 0x344;
-	int quest: 0x00E23230, 0x4;
-	
-	
-	
-	string6 QuestName: 0xC7A104, 0x614, 0x64,0x0;
-	int QuestStage: 0xC7A104, 0x614, 0x60;
-	int CellRefID : 0xC7A104, 0x3C, 0xC;
-
-	
-}
-state("Fallout3","Steam 1.7.0.4")
-{
-	bool introDone : 0xE3AFCC;
+	bool introDone : 0xDFF280;
 	bool loading : 0xE3ABBC;
 	float speed: 0x00B4BFB0, 0xB4, 0x8, 0x1A4, 0xE8, 0x60, 0x138, 0x344;
 	int quest: 0x00E23230, 0x4;
+	//Not Supported
 }		
 	
-init
-{
-    switch (modules.First().ModuleMemorySize) { // This is to know what version you are playing on
-        case 17952768: version = " 1.7.0.3";
-            break;
-        case 16166912: version = "GOG"; 
-            break;
-		case 16171008: version = "Steam 1.7.0.4";
-			break;
-        default:       version = "Steam 1.7.0.4"; 
-            break;
-    }
-}
-
 //copied from nv so sorry for game inconsistencies :)
 startup
  {
 	String speedometer;
 	String questcounter;
-
+	
     //creates text components for quest counter and speedometer
 	vars.SetTextComponent = (Action<string, string>)((id, text) =>
 	{
@@ -163,6 +150,23 @@ startup
 
 init
 {
+	
+	print(modules.First().ModuleMemorySize.ToString());
+    switch (modules.First().ModuleMemorySize) { // This is to know what version you are playing on
+        case (17952768):
+			version = "Steam"; 
+            break;
+        case (16166912):
+			version = "GOG"; 
+            break;
+		case (16171008):
+			version = "DownPatch";
+			break;
+        default:
+			version = "Steam"; 
+            break;
+    }
+	
 	//Allow splitting at custom times
 	/*
 	Make a text file with values seperated by commas
@@ -251,11 +255,15 @@ init
 
 update
 {
+
 	vars.split = false;
     vars.isLoading = false;
 	vars.doStart = false;
 	string hexCell = Convert.ToString(current.CellRefID,16).ToUpper();
-	
+	if(version=="Steam")
+	{
+		
+	}
 	if ((current.loading) || (!current.introDone)) {
         vars.isLoading = true;
     }
