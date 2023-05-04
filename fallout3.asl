@@ -7,10 +7,10 @@ state("Fallout3","Steam")
 	
 	
 	
-	string16 QuestName: 0xC7A104, 0x614, 0x64,0x0;
-	int QuestStage: 0xC7A104, 0x614, 0x60;
-	int CellRefID : 0xC7A104, 0x3C, 0xC;
-	int playerControlFlag: 0xC7A104, 0x5DC;
+	string16 QuestName: 0x00E3C674, 0x614, 0x64,0x0;
+	int QuestStage: 0x00E3C674, 0x614, 0x60;
+	int CellRefID : 0x00E3C674, 0x3C, 0xC;
+	int playerControlFlag: 0x00E3C674, 0x5DC;
 
 	
 }
@@ -26,7 +26,7 @@ state("Fallout3","GOG")
 	int CellRefID : 0xC7A104, 0x3C, 0xC;
 	int playerControlFlag: 0xC7A104, 0x5DC;
 }
-state("Fallout3","DownPatch)
+state("Fallout3","DownPatch")
 {
 	bool introDone : 0xDFF280;
 	bool loading : 0xE3ABBC;
@@ -255,7 +255,6 @@ init
 
 update
 {
-
 	vars.split = false;
     vars.isLoading = false;
 	vars.doStart = false;
