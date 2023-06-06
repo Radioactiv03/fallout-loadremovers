@@ -276,7 +276,7 @@ update
 			{
 				current.speed = 0;
 			}
-			current.speedometer = (Math.Sqrt(Math.Pow(current.speed,2)+Math.Pow(current.HorizontalSpeed,2)).ToString("000.0000");
+			current.speedometer = (Math.Sqrt(Math.Pow(current.speed,2)+Math.Pow(current.HorizontalSpeed,2))).ToString("000.0000");
 			vars.SetTextComponent("Speed:", (current.speedometer));
 		}
 
