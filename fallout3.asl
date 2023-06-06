@@ -2,11 +2,12 @@ state("Fallout3","Steam")
 {
 	bool introDone : 0xE3AFCC;
 	bool loading : 0xE3ABBC;
-	float speed: 0x00D13F68, 0x1E0, 0x1BC, 0xB4, 0x8, 0x60, 0x138, 0x344;
+	
 	int quest: 0x00E23230, 0x4;
 	
 	
-	
+	float speed: 0x00D13F68, 0x60, 0x138, 0x344;
+	float Horizontalspeed: 0x00D13F68, 0x60, 0x138, 0x340;
 	string16 QuestName: 0x00E3C674, 0x614, 0x64,0x0;
 	int QuestStage: 0x00E3C674, 0x614, 0x60;
 	int CellRefID : 0x00E3C674, 0x3C, 0xC;
@@ -275,7 +276,7 @@ update
 			{
 				current.speed = 0;
 			}
-			current.speedometer = current.speed.ToString("000.0000");
+			current.speedometer = (Math.Sqrt(Math.Pow(current.speed,2)+Math.Pow(current.HorizontalSpeed,2)).ToString("000.0000");
 			vars.SetTextComponent("Speed:", (current.speedometer));
 		}
 
