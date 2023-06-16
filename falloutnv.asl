@@ -1,6 +1,6 @@
 state("FalloutNV")
 {
-	//bool loading : 0xDDA4EC;
+	bool loadingPtr : 0xDDA4EC;
 	//pre xnvse patch - bool introDone : 0xDDA590;
 	bool introDone : 0xDDAC70;
 	byte quest: 0x00DC6D50, 0x4;
@@ -124,6 +124,11 @@ startup
 
 	//161E98 is the final cutscene room but will not include in MaxQ due to weird final quest
 	
+	vars.isLoadingSig = new SigScanTarget(1,
+	"A2 ?? ?? ?? ??",					//mov [FalloutNV.exe+DDA4EC],al 			//Loading
+	"83 3D ?? ?? ?? ?? ??",				//cmp dword ptr [FalloutNV.exe+DDA4F0],00
+	"74 10"); 							//je FalloutNV.exe+3AA6D4
+
 }
 
 
@@ -132,18 +137,11 @@ init
 
 	var module = modules.First();
 	var scanner = new SignatureScanner(game, module.BaseAddress, module.ModuleMemorySize);
-	vars.isLoadingSig = IntPtr.Zero;
-	
-	vars.isLoadingSig = new SigScanTarget(1,
-	"A2 ?? ?? ?? ??",					//mov [FalloutNV.exe+DDA4EC],al 			//Loading
-	"83 3D ?? ?? ?? ?? ??",				//cmp dword ptr [FalloutNV.exe+DDA4F0],00
-	"74 10"); 							//je FalloutNV.exe+3AA6D4
 
 	vars.isLoadingAddr = scanner.Scan(vars.isLoadingSig);
 	
 	vars.pointeraddr = new DeepPointer(vars.isLoadingAddr,0);
 	vars.loading = new MemoryWatcher<bool>(vars.pointeraddr);
-
 	//Allow splitting at custom times
 	/*
 	Make a text file with values seperated by commas
@@ -240,7 +238,7 @@ update
 	vars.doStart = false;
 	string hexCell = Convert.ToString(current.CellRefID,16).ToUpper();
 	
-	if ((vars.loading.Current) || (!current.introDone)) {
+	if ((current.loadingPtr) || (!current.introDone)) {
         vars.isLoading = true;
     }
 	
