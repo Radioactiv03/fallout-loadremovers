@@ -1,6 +1,6 @@
 state("FalloutNV")
 {
-	bool loading : 0xDDA4EC;
+	//bool loading : 0xDDA4EC;
 	//pre xnvse patch - bool introDone : 0xDDA590;
 	bool introDone : 0xDDAC70;
 	byte quest: 0x00DC6D50, 0x4;
@@ -13,8 +13,6 @@ state("FalloutNV")
 	int CellRefID : 0x0DDEA3C, 0x40, 0xAC, 0x40, 0xC;
 	
 }
-
-
 
 startup
  {
@@ -131,6 +129,21 @@ startup
 
 init
 {
+
+	var module = modules.First();
+	var scanner = new SignatureScanner(game, module.BaseAddress, module.ModuleMemorySize);
+	vars.isLoadingSig = IntPtr.Zero;
+	
+	vars.isLoadingSig = new SigScanTarget(1,
+	"A2 ?? ?? ?? ??",					//mov [FalloutNV.exe+DDA4EC],al 			//Loading
+	"83 3D ?? ?? ?? ?? ??",				//cmp dword ptr [FalloutNV.exe+DDA4F0],00
+	"74 10"); 							//je FalloutNV.exe+3AA6D4
+
+	vars.isLoadingAddr = scanner.Scan(vars.isLoadingSig);
+	
+	vars.pointeraddr = new DeepPointer(vars.isLoadingAddr,0);
+	vars.loading = new MemoryWatcher<bool>(vars.pointeraddr);
+
 	//Allow splitting at custom times
 	/*
 	Make a text file with values seperated by commas
@@ -220,12 +233,14 @@ init
 
 update
 {
+
+	vars.loading.Update(game);
 	vars.split = false;
     vars.isLoading = false;
 	vars.doStart = false;
 	string hexCell = Convert.ToString(current.CellRefID,16).ToUpper();
 	
-	if ((current.loading) || (!current.introDone)) {
+	if ((vars.loading.Current) || (!current.introDone)) {
         vars.isLoading = true;
     }
 	
