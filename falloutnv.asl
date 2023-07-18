@@ -69,8 +69,8 @@ startup
 	//The hex code for cells can be found either using the debug tools or getting the cell ref id from a wiki page :)
 	
 	vars.any_Quests = new List<String>{"","","","","","","","","","","","","","","","","",""}; //if quest blank allow any quest to be active
-    vars.any_Cell = new List<String>{"DAEBB","102195","13B3CE","10BEEE","1221C4","E8202","DDE34","161E98"};
-	//split: doc,Enter Pearls Barracks, Enter Strip, Enter lucky 38, basement, el dorado, enter dam, end
+    vars.any_Cell = new List<String>{"DAEBB","13B3CE","10BEEE","102195","1221C4","E8202","DDE34","161E98"};
+	//split: doc, Enter Strip, Enter lucky 38,Enter Pearls Barracks, basement, el dorado, enter dam, end
 	
 	
 	
