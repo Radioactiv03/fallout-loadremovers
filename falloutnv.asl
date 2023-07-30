@@ -5,6 +5,7 @@ state("FalloutNV")
 	bool introDone : 0xDDAC70;
 	byte quest: 0x00DC6D50, 0x4;
 
+	//Only valid on Steam,GOG
 	//0x0DDEA3C Player Base
 	float speed : 0x0DDEA3C, 0x68, 0x138, 0x514;
 	float HorizontalSpeed : 0x0DDEA3C, 0x68, 0x138, 0x510;
@@ -124,10 +125,7 @@ startup
 
 	//161E98 is the final cutscene room but will not include in MaxQ due to weird final quest
 	
-	vars.isLoadingSig = new SigScanTarget(1,
-	"A2 ?? ?? ?? ??",					//mov [FalloutNV.exe+DDA4EC],al 			//Loading
-	"83 3D ?? ?? ?? ?? ??",				//cmp dword ptr [FalloutNV.exe+DDA4F0],00
-	"74 10"); 							//je FalloutNV.exe+3AA6D4
+
 
 }
 
@@ -135,11 +133,20 @@ startup
 init
 {
 
+	vars.isLoadingSig = new SigScanTarget(1,
+	"A2 ?? ?? ?? ??",					//mov [FalloutNV.exe+DDA4EC],al 			//Loading
+	"83 3D ?? ?? ?? ?? ??",				//cmp dword ptr [FalloutNV.exe+DDA4F0],00
+	"74 10"); 							//je FalloutNV.exe+3AA6D4
+
 	var module = modules.First();
 	var scanner = new SignatureScanner(game, module.BaseAddress, module.ModuleMemorySize);
 
 	vars.isLoadingAddr = scanner.Scan(vars.isLoadingSig);
-	
+			
+	if (vars.isLoadingAddr == IntPtr.Zero)
+    {
+        throw new Exception("Game engine not initialized - retrying");
+    }
 	vars.pointeraddr = new DeepPointer(vars.isLoadingAddr,0);
 	vars.loading = new MemoryWatcher<bool>(vars.pointeraddr);
 	//Allow splitting at custom times
@@ -231,14 +238,13 @@ init
 
 update
 {
-
 	vars.loading.Update(game);
 	vars.split = false;
     vars.isLoading = false;
 	vars.doStart = false;
 	string hexCell = Convert.ToString(current.CellRefID,16).ToUpper();
 	
-	if ((current.loadingPtr) || (!current.introDone)) {
+	if ((vars.loading.Current) || (!current.introDone)) {
         vars.isLoading = true;
     }
 	
