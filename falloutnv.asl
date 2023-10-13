@@ -309,6 +309,7 @@ update
 	
 	if(settings["AutoStart"])
 	{
+		timer.IsGameTimePaused = true;
 		vars.doStart = hexCell=="103DF9" && current.QuestName==null && old.CellRefID!=current.CellRefID;
 	}
 	
