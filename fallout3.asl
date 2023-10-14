@@ -154,7 +154,7 @@ startup
 init
 {
 	
-	print(modules.First().ModuleMemorySize.ToString());
+	//print(modules.First().ModuleMemorySize.ToString());
     switch (modules.First().ModuleMemorySize) { // This is to know what version you are playing on
         case (17952768):
 			version = "Steam"; 
@@ -308,6 +308,7 @@ update
 	
 	if(settings["AutoStart"])
 	{
+		timer.IsGameTimePaused = true;
 		vars.doStart = hexCell=="28138" && old.CellRefID!=current.CellRefID;
 	}
 	
