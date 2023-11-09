@@ -31,11 +31,17 @@ state("Fallout3","GOG")
 }
 state("Fallout3","DownPatch")
 {
-	bool introDone : 0xDFF280;
-	bool loading : 0xE3ABBC;
-	float speed: 0x00B4BFB0, 0xB4, 0x8, 0x1A4, 0xE8, 0x60, 0x138, 0x344;
-	int quest: 0x00E23230, 0x4;
+
+	bool loading : 0xC76CE8;
+	bool introDone : 0xC771D0;
+	int quest: 0xC6F2F8 , 0x4;
+	float speed : 0xC7A104, 0x60, 0x138, 0x344;
+	float HorizontalSpeed: 0xC7A104, 0x60, 0x138, 0x340;
+	
 	//Not Supported
+	//int quest: 0x00E23230, 0x4;
+	//bool introDone : 0xDFF280;
+	//bool loading : 0xE3ABBC;
 }		
 	
 //copied from nv so sorry for game inconsistencies :)
@@ -154,7 +160,7 @@ startup
 init
 {
 	
-	//print(modules.First().ModuleMemorySize.ToString());
+	
     switch (modules.First().ModuleMemorySize) { // This is to know what version you are playing on
         case (17952768):
 			version = "Steam"; 
@@ -258,13 +264,14 @@ init
 
 update
 {
+	//print(modules.First().ModuleMemorySize.ToString());
 	vars.split = false;
     vars.isLoading = false;
 	vars.doStart = false;
-	string hexCell = Convert.ToString(current.CellRefID,16).ToUpper();
-	if(version=="Steam")
+	string hexCell = "";
+	if(settings["Debug"] || settings["Autosplitter"] || settings["AutoStart"])
 	{
-		
+		hexCell = Convert.ToString(current.CellRefID,16).ToUpper();
 	}
 	if ((current.loading) || (!current.introDone)) {
         vars.isLoading = true;
