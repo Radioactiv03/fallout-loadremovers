@@ -199,22 +199,22 @@ init
 					case 0: //Quest Name
 							foreach(var Quest in line)
 							{
-								vars.custom_Quests.Add(Quest);
-								print(Quest);
+								vars.custom_Quests.Add(Quest.ToUpper());
+								//print(Quest);
 							}
 							break;
 					case 1: //Quest Stage
 							foreach(var QuestStage in line)
 							{
-								vars.custom_Stage.Add(QuestStage);
-								print(QuestStage);
+								vars.custom_Stage.Add(QuestStage.ToUpper());
+								//print(QuestStage);
 							}
 							break;
 					case 2:
 							foreach(var CellID in line)
 							{
-								vars.custom_Cell.Add(CellID);
-								print(CellID);
+								vars.custom_Cell.Add(CellID.ToUpper());
+								//print(CellID);
 							}
 							break;						
 					default:
@@ -228,7 +228,7 @@ init
 			int len = vars.custom_Quests.Count - vars.custom_Cell.Count;
 			for(int x=0;x<len;x++)
 			{
-				vars.custom_Cell.Add("");
+				vars.custom_Cell.Add("any");
 			}
 		}
 		else
@@ -236,7 +236,7 @@ init
 			int len = vars.custom_Cell.Count - vars.custom_Quests.Count;
 			for(int x=0;x<len;x++)
 			{
-				vars.custom_Quests.Add("");
+				vars.custom_Quests.Add("any");
 			}
 		}
 		if(vars.custom_Quests.Count == vars.custom_Stage.Count){}
@@ -245,7 +245,7 @@ init
 			int len = vars.custom_Quests.Count - vars.custom_Stage.Count;
 			for(int x=0;x<len;x++)
 			{
-				vars.custom_Stage.Add("");
+				vars.custom_Stage.Add("any");
 			}
 		}
 		else
@@ -253,7 +253,7 @@ init
 			int len = vars.custom_Stage.Count - vars.custom_Quests.Count;
 			for(int x=0;x<len;x++)
 			{
-				vars.custom_Quests.Add("");
+				vars.custom_Quests.Add("any");
 			}
 		}
 	}
@@ -357,14 +357,14 @@ update
 			else if(settings["Custom"])
 			{
 
-				if(vars.custom_Quests[vars.splitCount % vars.custom_Cell.Count]=="any")
+				if(vars.custom_Quests[vars.splitCount % vars.custom_Cell.Count].ToLower()=="any")
 				{
 					vars.split = vars.custom_Cell[vars.splitCount % vars.custom_Cell.Count] == hexCell && current.CellRefID!=old.CellRefID;	
 				}
 				
 				else
 				{
-					if(vars.custom_Stage[vars.splitCount % vars.custom_Cell.Count]=="any")
+					if(vars.custom_Stage[vars.splitCount % vars.custom_Cell.Count].ToLower()=="any")
 					{
 						vars.split = ((vars.custom_Cell[vars.splitCount % vars.custom_Cell.Count] == hexCell) && (vars.custom_Quests[vars.splitCount % vars.custom_Cell.Count] == current.QuestName) && (current.CellRefID!=old.CellRefID));
 					}
