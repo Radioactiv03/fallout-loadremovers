@@ -202,22 +202,22 @@ init
 					case 0: //Quest Name
 							foreach(var Quest in line)
 							{
-								vars.custom_Quests.Add(Quest);
-								print(Quest);
+								vars.custom_Quests.Add(Quest.ToUpper());
+								//print(Quest);
 							}
 							break;
 					case 1: //Quest Stage
 							foreach(var QuestStage in line)
 							{
-								vars.custom_Stage.Add(QuestStage);
-								print(QuestStage);
+								vars.custom_Stage.Add(QuestStage.ToUpper());
+								//print(QuestStage);
 							}
 							break;
 					case 2:
 							foreach(var CellID in line)
 							{
-								vars.custom_Cell.Add(CellID);
-								print(CellID);
+								vars.custom_Cell.Add(CellID.ToUpper());
+								//print(CellID);
 							}
 							break;						
 					default:
