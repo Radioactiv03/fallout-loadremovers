@@ -217,7 +217,7 @@ init
 							foreach(var CellID in line)
 							{
 								vars.custom_Cell.Add(CellID.ToUpper());
-								//print(CellID);
+								print(CellID.ToUpper());
 							}
 							break;						
 					default:
@@ -367,22 +367,22 @@ update
 			else if(settings["Custom"])
 			{
 
-				if(vars.custom_Quests[vars.splitCount % vars.custom_Cell.Count]=="any")
+				if(vars.custom_Quests[vars.splitCount % vars.custom_Cell.Count].ToLower()=="any")
 				{
 					vars.split = vars.custom_Cell[vars.splitCount % vars.custom_Cell.Count] == hexCell && current.CellRefID!=old.CellRefID;	
 				}
 				
 				else
 				{
-					if(vars.custom_Stage[vars.splitCount % vars.custom_Cell.Count]=="any")
+					if(vars.custom_Stage[vars.splitCount % vars.custom_Cell.Count].ToLower()=="any")
 					{
 						vars.split = ((vars.custom_Cell[vars.splitCount % vars.custom_Cell.Count] == hexCell) && (vars.custom_Quests[vars.splitCount % vars.custom_Cell.Count] == current.QuestName) && (current.CellRefID!=old.CellRefID));
 					}
 					else
 					{
 						print(((vars.custom_Quests[vars.splitCount % vars.custom_Cell.Count] == current.QuestName)).ToString());
-						print(vars.custom_Quests[vars.splitCount % vars.custom_Cell.Count]);
-						print(current.QuestName);
+						//print(vars.custom_Quests[vars.splitCount % vars.custom_Cell.Count]);
+						//print(current.QuestName);
 						vars.split = ((vars.custom_Cell[vars.splitCount % vars.custom_Cell.Count] == hexCell) && (vars.custom_Quests[vars.splitCount % vars.custom_Cell.Count] == current.QuestName) && (current.CellRefID!=old.CellRefID) && (current.QuestStage.ToString() == vars.custom_Stage[vars.splitCount % vars.custom_Cell.Count]));
 					}
 				}
